@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Loading data from a CSV file</title>
+		<script type="text/javascript" src="../d3.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+
+			//WARNING: Messy example, not cleaned up yet!
+
+
+			var rowConverter = function(d) {
+				
+				//Filter out foods less delicious than 5
+				//if (d.Deliciousness > 5) {
+					return {
+						foodName: d.Food, //No conversion
+						yums: parseFloat(d.Deliciousness)
+					};	
+				//}
+				//otherwise return nothing
+				
+			}
+
+			d3.csv("food.csv", rowConverter, function(dataset) {
+				
+				console.log(dataset);
+								
+				//your CSV will definitely be available in here
+				
+				//put all your chart-making code in here
+				//to ensure that data is available
+				
+				var svg = d3.select("body")
+					.append("svg")
+					.attr("width", 500)
+					.attr("height", 200);
+				
+				svg.selectAll("circle")
+					.data(dataset)
+					.enter()
+					.append("circle")
+					.attr("cx", function(d) {
+						return d.yums * 10;
+					})
+					.attr("cy", function(d) {
+						return d.yums * 10;
+					})
+					.attr("r", 10)
+					.attr("fill", "blue");
+				
+				
+			});
+
+			//your CSV file may not be available here yet
+
+
+
+			
+			
+
+		</script>
+	</body>
+</html>
